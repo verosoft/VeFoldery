@@ -57,7 +57,7 @@ jobs:
           chmod +x scripts/package-macos.sh
           ./scripts/package-macos.sh publish dist
 
-          VER=$(git describe --tags --always 2>/dev/null || echo snapshot)
+          VER="${GITHUB_REF_NAME:-snapshot}"
           cd dist
           zip -r --symlinks "TimeFold-${VER}-macos-${{ matrix.rid }}.zip" TimeFold.app
           cd ..
@@ -67,7 +67,7 @@ jobs:
         if: runner.os == 'Linux'
         shell: bash
         run: |
-          VER=$(git describe --tags --always 2>/dev/null || echo snapshot)
+          VER="${GITHUB_REF_NAME:-snapshot}"
           mkdir -p dist/TimeFold
           cp publish/TimeFold dist/TimeFold/
           chmod +x dist/TimeFold/TimeFold
@@ -77,7 +77,7 @@ jobs:
         if: runner.os == 'Linux' && matrix.rid == 'linux-x64'
         shell: bash
         run: |
-          VER=$(git describe --tags --always 2>/dev/null || echo snapshot)
+          VER="${GITHUB_REF_NAME:-snapshot}"
           mkdir -p AppDir/usr/bin AppDir/usr/share/icons/hicolor/256x256/apps
           cp publish/TimeFold AppDir/usr/bin/TimeFold
           chmod +x AppDir/usr/bin/TimeFold
@@ -108,12 +108,13 @@ jobs:
       - name: Package Windows
         if: runner.os == 'Windows'
         shell: pwsh
-        run: |
-          $ver = (git describe --tags --always 2>$null) ?? "snapshot"
-          Remove-Item publish/*.pdb -Force -ErrorAction SilentlyContinue
-          Compress-Archive -Path publish/* -DestinationPath "dist/TimeFold-$ver-win-x64.zip"
         env:
           VER: ${{ github.ref_name }}
+        run: |
+          if (-not $env:VER -or $env:VER -eq '${{ github.ref_name }}' -and '${{ github.ref_name }}' -notlike 'v*') { $env:VER = "snapshot" }
+          Remove-Item publish/*.pdb -Force -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          Compress-Archive -Path publish/* -DestinationPath "dist/TimeFold-$env:VER-win-x64.zip"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
