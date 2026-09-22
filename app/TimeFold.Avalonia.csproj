@@ -4,10 +4,20 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Version>1.0.4</Version>
+    <AssemblyName>TimeFold</AssemblyName>
+    <RootNamespace>TimeFold.Avalonia</RootNamespace>
+    <ApplicationIcon Condition="$(RuntimeIdentifier.StartsWith('win'))">Assets\app.ico</ApplicationIcon>
+
+    <!-- Self-contained single-file: no .NET runtime needed on target machines -->
+    <PublishSingleFile Condition="'$(RuntimeIdentifier)' != ''">true</PublishSingleFile>
+    <SelfContained Condition="'$(RuntimeIdentifier)' != ''">true</SelfContained>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType Condition="'$(RuntimeIdentifier)' != ''">none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 

@@ -20,8 +20,8 @@ public enum AppTheme
 /// </summary>
 public static class ThemeManager
 {
-    private const string DarkUri = "avares://TimeFold.Avalonia/Themes/LinearDark.axaml";
-    private const string LightUri = "avares://TimeFold.Avalonia/Themes/LinearLight.axaml";
+    private const string DarkUri = "avares://TimeFold/Themes/LinearDark.axaml";
+    private const string LightUri = "avares://TimeFold/Themes/LinearLight.axaml";
 
     public static AppTheme Current { get; private set; } = AppTheme.Dark;
 
@@ -54,7 +54,7 @@ public static class ThemeManager
             app.Styles.Remove(si);
 
         var uri = theme == AppTheme.Light ? LightUri : DarkUri;
-        app.Styles.Add(new StyleInclude(new Uri("avares://TimeFold.Avalonia/"))
+        app.Styles.Add(new StyleInclude(new Uri("avares://TimeFold/"))
         {
             Source = new Uri(uri)
         });

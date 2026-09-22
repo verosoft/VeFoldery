@@ -1,0 +1,154 @@
+name: Release TimeFold (multiplatform)
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - '[0-9]*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APP_NAME: TimeFold
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            rid: osx-arm64
+          - os: macos-latest
+            rid: osx-x64
+          - os: ubuntu-latest
+            rid: linux-x64
+          - os: ubuntu-latest
+            rid: linux-arm64
+          - os: windows-latest
+            rid: win-x64
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish (self-contained single file)
+        shell: bash
+        run: |
+          dotnet publish app/TimeFold.Avalonia.csproj -c Release -r ${{ matrix.rid }} \
+            -o publish/
+
+      - name: Strip debug symbols (linux/mac)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: rm -f publish/*.pdb
+
+      # ---------- macOS: .app bundle + zip ----------
+      - name: Bundle .app
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          chmod +x scripts/package-macos.sh
+          ./scripts/package-macos.sh publish dist
+
+          VER=$(git describe --tags --always 2>/dev/null || echo snapshot)
+          cd dist
+          zip -r --symlinks "TimeFold-${VER}-macos-${{ matrix.rid }}.zip" TimeFold.app
+          cd ..
+
+      # ---------- Linux: AppImage + tar.gz ----------
+      - name: Package Linux (tar.gz)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          VER=$(git describe --tags --always 2>/dev/null || echo snapshot)
+          mkdir -p dist/TimeFold
+          cp publish/TimeFold dist/TimeFold/
+          chmod +x dist/TimeFold/TimeFold
+          tar -czf "dist/TimeFold-${VER}-linux-${{ matrix.rid }}.tar.gz" -C dist TimeFold
+
+      - name: Package Linux (AppImage, x64 only)
+        if: runner.os == 'Linux' && matrix.rid == 'linux-x64'
+        shell: bash
+        run: |
+          VER=$(git describe --tags --always 2>/dev/null || echo snapshot)
+          mkdir -p AppDir/usr/bin AppDir/usr/share/icons/hicolor/256x256/apps
+          cp publish/TimeFold AppDir/usr/bin/TimeFold
+          chmod +x AppDir/usr/bin/TimeFold
+          if [ -f app/Assets/app.png ]; then
+            cp app/Assets/app.png AppDir/usr/share/icons/hicolor/256x256/apps/timefold.png
+          fi
+          cat > AppDir/timefold.desktop <<DESKTOP
+          [Desktop Entry]
+          Type=Application
+          Name=TimeFold
+          Comment=Organize files into date-based or category folders
+          Exec=TimeFold
+          Icon=timefold
+          Categories=Utility;FileTools;
+          DESKTOP
+          cat > AppDir/AppRun <<APPRUN
+          #!/bin/sh
+          exec "\$(dirname "\$(readlink -f "\$0")")/usr/bin/TimeFold" "\$@"
+          APPRUN
+          chmod +x AppDir/AppRun
+          # appimagetool (static, no FUSE needed to build)
+          curl -sL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool
+          ./appimagetool AppDir "dist/TimeFold-${VER}-linux-x64.AppImage" || \
+            echo "::warning::AppImage build failed; tar.gz still available"
+
+      # ---------- Windows: zip ----------
+      - name: Package Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ver = (git describe --tags --always 2>$null) ?? "snapshot"
+          Remove-Item publish/*.pdb -Force -ErrorAction SilentlyContinue
+          Compress-Archive -Path publish/* -DestinationPath "dist/TimeFold-$ver-win-x64.zip"
+        env:
+          VER: ${{ github.ref_name }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: TimeFold-${{ matrix.rid }}
+          path: |
+            dist/*.zip
+            dist/*.tar.gz
+            dist/*.AppImage
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Checksums
+        shell: bash
+        run: |
+          cd dist
+          find . -type f \( -name "*.zip" -o -name "*.tar.gz" -o -name "*.AppImage" \) -exec sha256sum {} \; > checksums.txt
+
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            dist/**/*.zip
+            dist/**/*.tar.gz
+            dist/**/*.AppImage
+            dist/checksums.txt

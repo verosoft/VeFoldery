@@ -12,3 +12,7 @@ tests/obj/
 
 tools/ScanProbe/bin/
 tools/ScanProbe/obj/
+
+# packaging
+dist/
+publish/
