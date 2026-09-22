@@ -38,6 +38,18 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private ObservableCollection<FileEntryViewModel> _files = new();
 
+    public System.Collections.Generic.IEnumerable<string> ThemeOptions { get; } =
+        new[] { "Dark", "Light" };
+
+    [ObservableProperty]
+    private string _selectedTheme = "Dark";
+
+    partial void OnSelectedThemeChanged(string value)
+    {
+        if (Enum.TryParse<AppTheme>(value, ignoreCase: true, out var theme))
+            ThemeManager.SetTheme(theme, Settings);
+    }
+
     public bool HasFolder => !string.IsNullOrWhiteSpace(FolderPath) && Directory.Exists(FolderPath);
 
     public bool CanOrganize => Files.Count > 0 && !IsLoading;
@@ -55,6 +67,8 @@ public partial class MainViewModel : ViewModelBase
         // property and triggers the scan, even when it equals the
         // most-recent folder persisted from a previous session.
         _selectedMode = Settings.OrgMode;
+        _selectedTheme = Settings.UiTheme;
+        ThemeManager.Initialize(Settings);
     }
 
     /// <summary>

@@ -1,0 +1,157 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Light theme (Linear light-mode neutrals + brand indigo)
+         #f7f8f8 bg / #ffffff surface / #171717 text
+         #6b6f76 muted / #5e6ad2 brand -->
+
+    <Styles.Resources>
+        <SolidColorBrush x:Key="BgWindow" Color="#f7f8f8" />
+        <SolidColorBrush x:Key="BgSurface" Color="#ffffff" />
+        <SolidColorBrush x:Key="BgHover" Color="#ededef" />
+        <SolidColorBrush x:Key="TextPrimary" Color="#171717" />
+        <SolidColorBrush x:Key="TextSecondary" Color="#2c2c2e" />
+        <SolidColorBrush x:Key="TextMuted" Color="#6b6f76" />
+        <SolidColorBrush x:Key="TextFaint" Color="#9a9ea5" />
+        <SolidColorBrush x:Key="AccentBrand" Color="#5e6ad2" />
+        <SolidColorBrush x:Key="AccentBrandHover" Color="#505bc4" />
+        <SolidColorBrush x:Key="AccentViolet" Color="#5e6ad2" />
+        <SolidColorBrush x:Key="BorderSubtle" Color="#e3e4e6" />
+        <SolidColorBrush x:Key="BorderStandard" Color="#d0d6e0" />
+        <SolidColorBrush x:Key="Success" Color="#1f9d4d" />
+        <SolidColorBrush x:Key="Danger" Color="#d13438" />
+    </Styles.Resources>
+
+    <!-- ============ Window ============ -->
+    <Style Selector="Window">
+        <Setter Property="Background" Value="{StaticResource BgWindow}" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="Inter, Segoe UI, SF Pro Text, Helvetica Neue" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+    <!-- ============ Buttons ============ -->
+    <Style Selector="Button">
+        <Setter Property="Background" Value="#ffffff" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderStandard}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource BgHover}" />
+        <Setter Property="BorderBrush" Value="#b9c0cc" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+    </Style>
+    <Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="#e2e4e8" />
+    </Style>
+
+    <!-- Primary action (Organize) -->
+    <Style Selector="Button.primary">
+        <Setter Property="Background" Value="{StaticResource AccentBrand}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AccentBrandHover}" />
+        <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+    <Style Selector="Button.primary:disabled /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="#e3e4e6" />
+        <Setter Property="Foreground" Value="{StaticResource TextFaint}" />
+    </Style>
+
+    <!-- ============ CheckBox ============ -->
+    <Style Selector="CheckBox">
+        <Setter Property="Foreground" Value="{StaticResource TextMuted}" />
+    </Style>
+
+    <!-- ============ ComboBox ============ -->
+    <Style Selector="ComboBox">
+        <Setter Property="Background" Value="#ffffff" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderStandard}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+        <Setter Property="Padding" Value="10,5" />
+    </Style>
+    <Style Selector="ComboBox:pointerover /template/ ContentPresenter#ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource BgHover}" />
+        <Setter Property="BorderBrush" Value="#b9c0cc" />
+    </Style>
+    <Style Selector="ComboBoxItem">
+        <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+        <Setter Property="Padding" Value="10,6" />
+    </Style>
+    <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource BgHover}" />
+    </Style>
+    <Style Selector="ComboBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AccentBrand}" />
+        <Setter Property="Foreground" Value="#ffffff" />
+    </Style>
+
+    <!-- ============ DataGrid ============ -->
+    <Style Selector="DataGrid">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderSubtle}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="RowBackground" Value="Transparent" />
+        <Setter Property="GridLinesVisibility" Value="Horizontal" />
+        <Setter Property="HorizontalGridLinesBrush" Value="#ececee" />
+        <Setter Property="HeadersVisibility" Value="All" />
+        <Setter Property="RowHeight" Value="34" />
+    </Style>
+
+    <Style Selector="DataGridColumnHeader">
+        <Setter Property="Background" Value="#f1f2f4" />
+        <Setter Property="Foreground" Value="{StaticResource TextFaint}" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Padding" Value="10,7" />
+        <Setter Property="BorderBrush" Value="#e3e4e6" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+
+    <Style Selector="DataGridRow">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="DataGridRow:pointerover /template/ Border#Background">
+        <Setter Property="Background" Value="#f0f1f3" />
+    </Style>
+    <Style Selector="DataGridRow:selected /template/ Border#Background">
+        <Setter Property="Background" Value="#e4e7f7" />
+    </Style>
+
+    <Style Selector="DataGridCell">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="10,6" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="12.5" />
+    </Style>
+    <Style Selector="DataGridCell:focus">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <!-- ============ Text ============ -->
+    <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+    </Style>
+    <Style Selector="TextBlock.status">
+        <Setter Property="Foreground" Value="{StaticResource TextMuted}" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="TextBlock.label">
+        <Setter Property="Foreground" Value="{StaticResource TextFaint}" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+</Styles>
