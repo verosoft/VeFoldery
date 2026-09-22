@@ -3,20 +3,76 @@
         xmlns:vm="using:TimeFold.Avalonia.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="860" d:DesignHeight="560"
         x:Class="TimeFold.Avalonia.Views.MainWindow"
         x:DataType="vm:MainViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="TimeFold.Avalonia">
+        Title="TimeFold — File &amp; Folder Organizer"
+        Width="880" Height="580" MinWidth="640" MinHeight="420">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="12">
+
+        <!-- Toolbar -->
+        <StackPanel Grid.Row="0" Spacing="8" Margin="0,0,0,8">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Content="Choose folder…" Command="{Binding BrowseCommand}" />
+                <Button Content="Show in Finder" Command="{Binding RevealFolderCommand}"
+                        IsEnabled="{Binding HasFolder}" />
+                <Button Content="Rescan" Command="{Binding RescanCommand}"
+                        IsEnabled="{Binding HasFolder}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="Mode:" VerticalAlignment="Center" />
+                <ComboBox x:Name="ModeSelector" MinWidth="190" SelectedIndex="0">
+                    <ComboBoxItem Content="Date timeline" Tag="Date" />
+                    <ComboBoxItem Content="Category" Tag="Category" />
+                    <ComboBoxItem Content="Extension" Tag="Extension" />
+                    <ComboBoxItem Content="Category + Date" Tag="CategoryAndDate" />
+                    <ComboBoxItem Content="Date + Category" Tag="DateAndCategory" />
+                </ComboBox>
+                <CheckBox Content="Include top-level folders"
+                          IsChecked="{Binding IncludeFolders}" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- File list -->
+        <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" CornerRadius="4">
+            <DataGrid ItemsSource="{Binding Files}"
+                      AutoGenerateColumns="False"
+                      CanUserSortColumns="True"
+                      IsReadOnly="False"
+                      HeadersVisibility="All"
+                      GridLinesVisibility="Horizontal">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Move" Width="52">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate x:DataType="vm:FileEntryViewModel">
+                                <CheckBox IsChecked="{Binding Include}" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="3*" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Type" Binding="{Binding TypeDisplay}" Width="90" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Destination" Binding="{Binding TargetFolder}" Width="2*" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Size" Binding="{Binding SizeDisplay}" Width="80" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Modified" Binding="{Binding ModifiedDisplay}" Width="130" IsReadOnly="True" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <!-- Status bar -->
+        <Grid Grid.Row="3" Margin="0,8,0,0" ColumnDefinitions="*,Auto">
+            <TextBlock Grid.Column="0" Text="{Binding StatusText}" TextTrimming="CharacterEllipsis"
+                       VerticalAlignment="Center" />
+            <Button Grid.Column="1" Content="{Binding OrganizeButtonText}"
+                    Command="{Binding OrganizeCommand}"
+                    IsEnabled="{Binding CanOrganize}"
+                    Padding="24,6" FontWeight="SemiBold" />
+        </Grid>
+
+    </Grid>
 
 </Window>

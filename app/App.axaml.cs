@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -17,9 +20,16 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var vm = new MainViewModel();
+
+            // Optional: pre-load a folder passed on the command line
+            // (dotnet run -- /some/folder) for quick testing.
+            var arg = desktop.Args?.FirstOrDefault(a => Directory.Exists(a));
+            if (arg is not null) vm.FolderPath = Path.GetFullPath(arg);
+
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainViewModel(),
+                DataContext = vm,
             };
         }
 

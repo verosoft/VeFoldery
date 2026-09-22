@@ -1,4 +1,7 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
+using FileOrganizer.Models;
+using TimeFold.Avalonia.ViewModels;
 
 namespace TimeFold.Avalonia.Views;
 
@@ -7,5 +10,32 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        // Register this window so view-model helpers can open pickers.
+        StorageProviderHelper.Register(() => this);
+
+        ModeSelector.SelectionChanged += (_, _) => OnModeChanged();
+    }
+
+    private MainViewModel? Vm => DataContext as MainViewModel;
+
+    private void OnModeChanged()
+    {
+        if (Vm is null) return;
+
+        Vm.SelectedMode = ModeSelector.SelectedIndex switch
+        {
+            1 => OrganizationMode.Category,
+            2 => OrganizationMode.Extension,
+            3 => OrganizationMode.CategoryAndDate,
+            4 => OrganizationMode.DateAndCategory,
+            _ => OrganizationMode.Date
+        };
+    }
+
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        base.OnLoaded(e);
+        OnModeChanged();
     }
 }

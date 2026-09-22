@@ -9,3 +9,6 @@ app/obj/
 tests/bin/
 tests/obj/
 *.user
+
+tools/ScanProbe/bin/
+tools/ScanProbe/obj/

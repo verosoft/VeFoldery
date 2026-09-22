@@ -83,6 +83,11 @@ namespace FileOrganizer.Services
                             if (AppConstants.KnownSystemFilesAndDirs.Contains(itemName))
                                 continue;
 
+                            // Unix dotfiles (.DS_Store, .localized, .git, ...): on Windows
+                            // no entry starts with '.', so this is a no-op there.
+                            if (itemName.StartsWith('.'))
+                                continue;
+
                             try
                             {
                                 var attributes = File.GetAttributes(itemPath);

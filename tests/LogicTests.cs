@@ -68,6 +68,31 @@ namespace TimeFold.Core.Tests
         }
 
         [Fact]
+        public void ScanFiles_SkipsUnixDotfiles()
+        {
+            var dir = Path.Combine(Path.GetTempPath(), $"tf-dotfile-test-{Guid.NewGuid():N}");
+            Directory.CreateDirectory(dir);
+            try
+            {
+                File.WriteAllText(Path.Combine(dir, "real.txt"), "x");
+                File.WriteAllText(Path.Combine(dir, ".DS_Store"), "junk");
+                File.WriteAllText(Path.Combine(dir, ".hidden"), "junk");
+
+                var svc = new FileOrganizerService("TimeFold", dir, dir);
+                var files = svc.ScanFiles(includeTopLevelFolders: false, ignoreSystemFiles: true);
+
+                var names = files.Select(f => f.Name).ToList();
+                Assert.Contains("real.txt", names);
+                Assert.DoesNotContain(".DS_Store", names);
+                Assert.DoesNotContain(".hidden", names);
+            }
+            finally
+            {
+                Directory.Delete(dir, recursive: true);
+            }
+        }
+
+        [Fact]
         public void ConfigDirectory_ResolvesToUserProfile()
         {
             string path = FileOrganizer.Config.AppConstants.GetConfigDirectoryPath();
