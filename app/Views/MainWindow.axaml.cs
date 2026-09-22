@@ -37,5 +37,13 @@ public partial class MainWindow : Window
     {
         base.OnLoaded(e);
         OnModeChanged();
+
+        // DataContext is assigned after the constructor runs (object
+        // initializer), so wire the confirm gate here, once the VM exists.
+        if (DataContext is MainViewModel vm && vm.ConfirmOrganize is null)
+        {
+            vm.ConfirmOrganize = summary =>
+                Dialogs.ConfirmAsync(this, "Confirm organize", summary, "Organize", "Cancel");
+        }
     }
 }

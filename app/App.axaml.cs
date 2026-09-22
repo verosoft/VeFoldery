@@ -23,9 +23,9 @@ public partial class App : Application
             var vm = new MainViewModel();
 
             // Optional: pre-load a folder passed on the command line
-            // (dotnet run -- /some/folder) for quick testing.
+            // (dotnet run -- /some/folder); falls back to most recent.
             var arg = desktop.Args?.FirstOrDefault(a => Directory.Exists(a));
-            if (arg is not null) vm.FolderPath = Path.GetFullPath(arg);
+            vm.RestoreStartupFolder(arg);
 
             desktop.MainWindow = new MainWindow
             {

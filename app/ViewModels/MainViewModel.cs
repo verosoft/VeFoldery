@@ -15,6 +15,7 @@ namespace TimeFold.Avalonia.ViewModels;
 public partial class MainViewModel : ViewModelBase
 {
     private FileOrganizerService? _service;
+    private AppSettings Settings { get; } = AppSettings.LoadFromFile();
 
     [ObservableProperty]
     private string _folderPath = string.Empty;
@@ -41,10 +42,42 @@ public partial class MainViewModel : ViewModelBase
 
     public bool CanOrganize => Files.Count > 0 && !IsLoading;
 
+    /// <summary>
+    /// View-provided confirmation gate for the Organize action.
+    /// Receives a human summary; returns true to proceed.
+    /// </summary>
+    public Func<string, Task<bool>>? ConfirmOrganize { get; set; }
+
+    public MainViewModel()
+    {
+        // Restore persisted org mode. The startup folder is restored via
+        // RestoreStartupFolder() so it always goes through the public
+        // property and triggers the scan, even when it equals the
+        // most-recent folder persisted from a previous session.
+        _selectedMode = Settings.OrgMode;
+    }
+
+    /// <summary>
+    /// Opens the CLI-provided folder, falling back to the most recent one.
+    /// Must run after construction so FolderPath change handlers fire.
+    /// </summary>
+    public void RestoreStartupFolder(string? cliArg)
+    {
+        var candidate = cliArg;
+        if (string.IsNullOrWhiteSpace(candidate) && Settings.RecentFolders.Count > 0)
+            candidate = Settings.RecentFolders[0];
+        if (!string.IsNullOrWhiteSpace(candidate) && Directory.Exists(candidate))
+            FolderPath = Path.GetFullPath(candidate);
+    }
+
     partial void OnFolderPathChanged(string value)
     {
         OnPropertyChanged(nameof(HasFolder));
-        if (HasFolder) _ = ScanCoreAsync();
+        if (HasFolder)
+        {
+            Settings.AddRecentFolder(value);
+            _ = ScanCoreAsync();
+        }
     }
 
     partial void OnIsLoadingChanged(bool value)
@@ -55,6 +88,8 @@ public partial class MainViewModel : ViewModelBase
 
     partial void OnSelectedModeChanged(OrganizationMode value)
     {
+        Settings.OrgMode = value;
+        Settings.SaveToFile();
         if (HasFolder && Files.Count > 0) _ = ScanCoreAsync();
     }
 
@@ -84,6 +119,16 @@ public partial class MainViewModel : ViewModelBase
         if (toOrganize.Count == 0)
         {
             StatusText = "Nothing selected to organize.";
+            return;
+        }
+
+        // Safety gate: moving files is destructive-ish; confirm first.
+        var summary = $"{toOrganize.Count} item(s) in \"{FolderPath}\" will be moved into " +
+                      $"\"{FileOrganizer.Config.AppConstants.SortedFolderPrefix}…\" subfolders " +
+                      $"(mode: {SelectedMode}). A CSV audit log will be written.";
+        if (ConfirmOrganize is not null && !await ConfirmOrganize(summary))
+        {
+            StatusText = "Organize cancelled.";
             return;
         }
 
@@ -132,13 +177,27 @@ public partial class MainViewModel : ViewModelBase
                 workingDirectory: FolderPath,
                 outputDirectory: FolderPath);
 
+            // Reuse the same naming/mode settings the WinForms app persists,
+            // so both frontends behave identically for the same user config.
+            _service.ApplyNamingSettings(
+                format: Settings.FolderFormat,
+                prefix: Settings.FolderPrefix,
+                suffix: Settings.FolderSuffix,
+                use24Hour: Settings.Use24HourTimestamp,
+                mode: SelectedMode,
+                keepHtmlCompanions: Settings.KeepHtmlCompanionsTogether,
+                categoryPrefix: Settings.CategoryPrefix,
+                categorySuffix: Settings.CategorySuffix,
+                keepSubtitleCompanions: Settings.KeepSubtitleCompanionsTogether,
+                createSortedSubfolder: Settings.CreateSortedSubfolder);
+
             // Offload the directory scan to a worker thread to keep the UI free.
             var scanned = await Task.Run(() =>
                 _service.ScanFiles(
                     includeTopLevelFolders: IncludeFolders,
-                    ignoreSystemFiles: true,
-                    fileDateSource: DateSource.Modified,
-                    folderDateSource: DateSource.Modified));
+                    ignoreSystemFiles: Settings.IgnoreSystemFiles,
+                    fileDateSource: Settings.FileDateSource,
+                    folderDateSource: Settings.FolderDateSource));
 
             Files = new ObservableCollection<FileEntryViewModel>(
                 scanned.Select(f => new FileEntryViewModel(f)
