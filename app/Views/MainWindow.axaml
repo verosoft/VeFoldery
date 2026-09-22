@@ -68,10 +68,11 @@
         <!-- Status bar -->
         <Grid Grid.Row="3" Margin="0,8,0,0" ColumnDefinitions="*,Auto">
             <TextBlock Grid.Column="0" Text="{Binding StatusText}" TextTrimming="CharacterEllipsis"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center" Classes="status" />
             <Button Grid.Column="1" Content="{Binding OrganizeButtonText}"
                     Command="{Binding OrganizeCommand}"
                     IsEnabled="{Binding CanOrganize}"
+                    Classes="primary"
                     Padding="24,6" FontWeight="SemiBold" />
         </Grid>
 
