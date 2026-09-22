@@ -111,6 +111,56 @@ public partial class MainViewModel : ViewModelBase
     private Task RescanAsync() => ScanCoreAsync();
 
     [RelayCommand]
+    private async Task UndoAsync()
+    {
+        if (IsLoading || !HasFolder) return;
+
+        var logs = UndoService.GetUndoableLogs(FolderPath);
+        if (logs.Count == 0)
+        {
+            StatusText = "Nothing to undo: no audit logs in this folder.";
+            return;
+        }
+
+        string logPath = logs[0]; // newest run
+
+        // Safety gate: restoring moves files too; confirm first.
+        var summary = $"Undo the last organization run in \"{FolderPath}\"?\n\n" +
+                      "Every file listed in the newest audit log will be moved " +
+                      "back to its original location. Existing files are never overwritten.";
+        if (ConfirmOrganize is not null && !await ConfirmOrganize(summary))
+        {
+            StatusText = "Undo cancelled.";
+            return;
+        }
+
+        IsLoading = true;
+        StatusText = "Undoing…";
+
+        try
+        {
+            var progress = new Progress<(int current, int total, string name)>(p =>
+                StatusText = $"Restoring {p.current}/{p.total}: {p.name}");
+
+            var result = await UndoService.UndoFromLogAsync(logPath, progress);
+
+            await ScanCoreAsync(preserveSelection: false);
+
+            StatusText = $"Undo done: {result.FilesRestored} restored, {result.FilesSkipped} skipped" +
+                         (result.Errors > 0 ? $", {result.Errors} errors" : "") +
+                         (result.RemovedFolders.Count > 0 ? $" — removed {result.RemovedFolders.Count} empty Sorted folder(s)" : "");
+        }
+        catch (Exception ex)
+        {
+            StatusText = $"Undo error: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [RelayCommand]
     private async Task OrganizeAsync()
     {
         if (!CanOrganize || _service is null) return;

@@ -23,6 +23,8 @@
                         IsEnabled="{Binding HasFolder}" />
                 <Button Content="Rescan" Command="{Binding RescanCommand}"
                         IsEnabled="{Binding HasFolder}" />
+                <Button Content="↺ Undo last run" Command="{Binding UndoCommand}"
+                        IsEnabled="{Binding HasFolder}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <TextBlock Text="Mode:" VerticalAlignment="Center" />

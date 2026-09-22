@@ -93,6 +93,49 @@ namespace TimeFold.Core.Tests
         }
 
         [Fact]
+        public void Undo_RestoresFilesFromAuditLog()
+        {
+            var dir = Path.Combine(Path.GetTempPath(), $"tf-undo-test-{Guid.NewGuid():N}");
+            Directory.CreateDirectory(dir);
+            try
+            {
+                // Arrange: organizar una carpeta real con el core
+                File.WriteAllText(Path.Combine(dir, "a.txt"), "a");
+                File.WriteAllText(Path.Combine(dir, "b.jpg"), "b");
+
+                var svc = new FileOrganizerService("TimeFold", dir, dir);
+                var scanned = svc.ScanFiles(false, true);
+                var organizeTask = svc.OrganizeFilesAsync(scanned, null, CancellationToken.None);
+                organizeTask.Wait();
+                var organizeResult = organizeTask.Result;
+
+                Assert.Equal(2, organizeResult.FilesMoved);
+                Assert.True(File.Exists(organizeResult.CsvLogPath));
+                Assert.Equal(0, Directory.EnumerateFileSystemEntries(dir).Count(e => !Path.GetFileName(e).StartsWith("Sorted_") && !Path.GetFileName(e).EndsWith(".csv")));
+
+                // Act: undo desde el CSV
+                var undo = UndoService.UndoFromLog(organizeResult.CsvLogPath);
+
+                // Assert: archivos de vuelta, Sorted_ vacío eliminado
+                Assert.Equal(2, undo.FilesRestored);
+                Assert.Equal(0, undo.Errors);
+                Assert.True(File.Exists(Path.Combine(dir, "a.txt")));
+                Assert.True(File.Exists(Path.Combine(dir, "b.jpg")));
+                Assert.Single(undo.RemovedFolders); // la carpeta Sorted_ quedó vacía y se eliminó
+                Assert.Empty(Directory.GetDirectories(dir, "Sorted_*"));
+
+                // Idempotente: un segundo undo no rompe nada
+                var undo2 = UndoService.UndoFromLog(organizeResult.CsvLogPath);
+                Assert.Equal(0, undo2.FilesRestored);
+                Assert.Equal(2, undo2.FilesSkipped);
+            }
+            finally
+            {
+                Directory.Delete(dir, recursive: true);
+            }
+        }
+
+        [Fact]
         public void ConfigDirectory_ResolvesToUserProfile()
         {
             string path = FileOrganizer.Config.AppConstants.GetConfigDirectoryPath();
