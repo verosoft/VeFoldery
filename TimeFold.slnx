@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/app/">
+    <Project Path="app/TimeFold.Avalonia.csproj" />
+  </Folder>
+  <Folder Name="/core/">
+    <Project Path="core/TimeFold.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TimeFold.Core.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,2 +1,11 @@
 /src/local-docs
 /publish
+
+# .NET build artifacts (new structure)
+core/bin/
+core/obj/
+app/bin/
+app/obj/
+tests/bin/
+tests/obj/
+*.user
