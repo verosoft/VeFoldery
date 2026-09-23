@@ -60,6 +60,13 @@ public partial class MainViewModel : ViewModelBase
     /// </summary>
     public Func<string, Task<bool>>? ConfirmOrganize { get; set; }
 
+    /// <summary>
+    /// View-provided conflict dialog gate. Receives detected conflicts;
+    /// returns the chosen strategy, or null to cancel the run.
+    /// </summary>
+    public Func<System.Collections.Generic.IReadOnlyList<ConflictInfo>,
+        Task<ConflictResolutionStrategy?>>? ConfirmConflicts { get; set; }
+
     public MainViewModel()
     {
         // Restore persisted org mode. The startup folder is restored via
@@ -186,6 +193,25 @@ public partial class MainViewModel : ViewModelBase
             return;
         }
 
+        // Detect collisions before touching anything, mirroring the WinForms
+        // flow: CheckConflicts() on preview, dialog when starting a run.
+        var grouped = _service.GroupByMonthYear(toOrganize);
+        var conflicts = ConflictDetector.Detect(
+            toOrganize, grouped, FolderPath,
+            Settings.CreateSortedSubfolder, Settings.Use24HourTimestamp);
+
+        var strategy = ConflictResolutionStrategy.AutoRename;
+        if (conflicts.Count > 0 && ConfirmConflicts is not null)
+        {
+            var chosen = await ConfirmConflicts(conflicts);
+            if (chosen is null)
+            {
+                StatusText = "Organize cancelled (conflicts).";
+                return;
+            }
+            strategy = chosen.Value;
+        }
+
         // Safety gate: moving files is destructive-ish; confirm first.
         var summary = $"{toOrganize.Count} item(s) in \"{FolderPath}\" will be moved into " +
                       $"\"{FileOrganizer.Config.AppConstants.SortedFolderPrefix}…\" subfolders " +
@@ -205,7 +231,12 @@ public partial class MainViewModel : ViewModelBase
                 StatusText = $"Moving {p.current}/{p.total}: {p.currentFile}");
 
             var result = await _service.OrganizeFilesAsync(
-                toOrganize, progress, CancellationToken.None);
+                toOrganize, progress, CancellationToken.None,
+                generateCsvLog: true,
+                conflictStrategy: strategy,
+                collidingFilePaths: new System.Collections.Generic.HashSet<string>(
+                    conflicts.Select(c => c.Item.FullPath),
+                    System.StringComparer.OrdinalIgnoreCase));
 
             await ScanCoreAsync(preserveSelection: false);
 

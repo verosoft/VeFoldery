@@ -44,6 +44,9 @@ public partial class MainWindow : Window
         {
             vm.ConfirmOrganize = summary =>
                 Dialogs.ConfirmAsync(this, "Confirm organize", summary, "Organize", "Cancel");
+
+            vm.ConfirmConflicts = conflicts =>
+                Dialogs.ShowConflictsAsync(this, conflicts);
         }
     }
 }
