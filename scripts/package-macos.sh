@@ -58,4 +58,9 @@ cat > "$CONTENTS/Info.plist" <<PLIST
 </plist>
 PLIST
 
+# Ad-hoc sign the WHOLE bundle. The .NET single-file binary ships with its own
+# ad-hoc signature that breaks once it is embedded in a .app ("damaged" dialog on
+# Gatekeeper) — re-sign the bundle so the seal matches its contents.
+codesign --force --deep --sign - "$APP"
+
 echo "Bundle creado: $APP"
