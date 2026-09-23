@@ -74,13 +74,13 @@ public static class PreferencesDialog
             chkSorted);
 
         // --- Section: naming ---
-        var prefixBox = new TextBox { Watermark = "e.g. IMG_", Text = vm.FolderPrefix, MinWidth = 200 };
+        var prefixBox = new TextBox { PlaceholderText = "e.g. IMG_", Text = vm.FolderPrefix, MinWidth = 200 };
         prefixBox.TextChanged += (_, _) => vm.FolderPrefix = prefixBox.Text ?? string.Empty;
-        var suffixBox = new TextBox { Watermark = "e.g. _archive", Text = vm.FolderSuffix, MinWidth = 200 };
+        var suffixBox = new TextBox { PlaceholderText = "e.g. _archive", Text = vm.FolderSuffix, MinWidth = 200 };
         suffixBox.TextChanged += (_, _) => vm.FolderSuffix = suffixBox.Text ?? string.Empty;
-        var catPrefixBox = new TextBox { Watermark = "e.g. My ", Text = vm.CategoryPrefix, MinWidth = 200 };
+        var catPrefixBox = new TextBox { PlaceholderText = "e.g. My ", Text = vm.CategoryPrefix, MinWidth = 200 };
         catPrefixBox.TextChanged += (_, _) => vm.CategoryPrefix = catPrefixBox.Text ?? string.Empty;
-        var catSuffixBox = new TextBox { Watermark = "e.g. files", Text = vm.CategorySuffix, MinWidth = 200 };
+        var catSuffixBox = new TextBox { PlaceholderText = "e.g. files", Text = vm.CategorySuffix, MinWidth = 200 };
         catSuffixBox.TextChanged += (_, _) => vm.CategorySuffix = catSuffixBox.Text ?? string.Empty;
 
         var namingSection = MakeSection("Naming (Category mode)",
