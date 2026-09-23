@@ -56,8 +56,9 @@
                     <DataGridTemplateColumn Width="52">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
-                                <ToggleButton IsChecked="{Binding $parent[Window].DataContext.AllSelected, Mode=TwoWay}"
-                                              Width="18" Height="18" Margin="7,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                <Panel Width="52" Margin="-10,0,-10,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <ToggleButton IsChecked="{Binding $parent[Window].DataContext.AllSelected, Mode=TwoWay}"
+                                              Width="18" Height="18" Margin="-10,0,-10,0" HorizontalAlignment="Center" VerticalAlignment="Center"
                                               ToolTip.Tip="Select / deselect all">
                                     <ToggleButton.Template>
                                         <ControlTemplate TargetType="ToggleButton">
@@ -87,11 +88,14 @@
                                         </Style>
                                     </ToggleButton.Styles>
                                 </ToggleButton>
+                                </Panel>
                             </DataTemplate>
                         </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="vm:FileEntryViewModel">
-                                <CheckBox IsChecked="{Binding Include}" Margin="7,0,0,0" HorizontalAlignment="Center" />
+                                <Panel Width="52" Margin="-10,0,-10,0" HorizontalAlignment="Left">
+                                    <CheckBox IsChecked="{Binding Include}" HorizontalAlignment="Center" />
+                                </Panel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
