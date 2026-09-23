@@ -85,7 +85,7 @@ public static class Dialogs
     }
 
     /// <summary>
-    /// Modal conflict dialog, equivalent of the WinForms ConflictDialog:
+    /// Modal conflict dialog:
     /// lists detected collisions and asks for a resolution strategy.
     /// Returns null when cancelled.
     /// </summary>

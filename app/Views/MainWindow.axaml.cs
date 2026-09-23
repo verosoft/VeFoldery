@@ -18,8 +18,7 @@ public partial class MainWindow : Window
 
         ModeSelector.SelectionChanged += (_, _) => OnModeChanged();
 
-        // Drop a folder anywhere on the window to open it (parity with the
-        // WinForms PnlSourceDrop drag & drop).
+        // Drop a folder anywhere on the window to open it.
         DragDrop.SetAllowDrop(this, true);
         AddHandler(DragDrop.DragOverEvent, OnDragOver);
         AddHandler(DragDrop.DropEvent, OnDrop);

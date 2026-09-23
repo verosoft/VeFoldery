@@ -1,30 +1,26 @@
 <p align="center">
-  <img src="src/Assets/app.png" alt="TimeFold Logo" width="128" />
+  <img src="app/Assets/app.png" alt="TimeFold Logo" width="128" />
 </p>
 
 <h1 align="center">TimeFold: File & Folder Organizer</h1>
 
 <p align="center">
-  <strong>Fast, non-destructive file and folder organizer for Windows that turns messy directories into clean date-based timelines, file-type categories, or structured extension-based folders.</strong>
+  <strong>Fast, non-destructive file and folder organizer for macOS, Linux and Windows that turns messy directories into clean date-based timelines, file-type categories, or structured extension-based folders.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6?logo=windows&logoColor=white" alt="Platform" />
+  <img src="https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="Platform" />
   <img src="https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white" alt=".NET 10" />
-  <img src="https://img.shields.io/badge/Architecture-x64-blue" alt="Architecture" />
+  <img src="https://img.shields.io/badge/UI-Avalonia%2012-9B4FBA" alt="Avalonia" />
   <img src="https://img.shields.io/badge/License-GPLv3-green" alt="License" />
-  <img src="https://img.shields.io/badge/Release-Standalone%20Single%20File-success" alt="Single File" />
-</p>
-
-<p align="center">
-  <img src="docs/assets/timefold-banner.jpg" alt="TimeFold file and folder organizer for Windows" width="100%" />
+  <img src="https://img.shields.io/badge/Release-Self--contained-success" alt="Self-contained" />
 </p>
 
 ---
 
 ## What TimeFold Does
 
-TimeFold is a Windows file and folder organizer for people who have too many files in places like **Downloads**, **Screenshots**, **Photos**, or the **Desktop**.
+TimeFold is a cross-platform file and folder organizer for people who have too many files in places like **Downloads**, **Screenshots**, **Photos**, or the **Desktop**.
 
 Instead of manually creating folders and moving files one by one, TimeFold scans a selected folder, shows you the planned destinations, and then organizes the files and supported folders into the structure you choose.
 
@@ -92,38 +88,13 @@ Downloads/
 
 ### Organize by date
 
-TimeFold can also organize files and folders into date-based folders. You can choose the date format in Preferences:
+TimeFold can also organize files and folders into date-based folders. You can choose from 29 date formats, from months to quarters to year-only:
 
 ```text
-Month    → 2026-08
-Day      → 2026-08-15
+Month    → 2026-09
+Day      → 2026-09-23
 Quarter  → 2026-Q3
 Year     → 2026
-```
-
-For example, a month-based organization can look like this:
-
-```text
-Downloads/
-├── 2025-01/
-│   ├── invoice_amazon.pdf
-│   ├── IMG_2847.jpg
-│   └── project-report.docx
-│
-├── 2025-02/
-│   └── vacation.mp4
-│
-├── 2025-03/
-│   └── presentation.pptx
-│
-├── 2026-01/
-│   ├── invoice_10482.pdf
-│   ├── IMG_4921.jpg
-│   └── project.zip
-│
-└── 2026-03/
-    ├── resume.docx
-    └── screenshot.png
 ```
 
 ### Combine date and category
@@ -138,15 +109,7 @@ Downloads/
 │   ├── 2026-08/
 │   └── 2026-09/
 │
-├── PDF Files/
-│   ├── 2026-08/
-│   └── 2026-09/
-│
-├── Video Files/
-│   ├── 2026-08/
-│   └── 2026-09/
-│
-└── Zip & Archives/
+└── Video Files/
     ├── 2026-08/
     └── 2026-09/
 ```
@@ -158,14 +121,12 @@ Downloads/
 ├── 2026-08/
 │   ├── Images/
 │   ├── PDF Files/
-│   ├── Video Files/
-│   └── Zip & Archives/
+│   └── Video Files/
 │
 └── 2026-09/
     ├── Images/
     ├── PDF Files/
-    ├── Video Files/
-    └── Zip & Archives/
+    └── Video Files/
 ```
 
 ### Organize by file extension
@@ -178,37 +139,21 @@ Downloads/
 │   ├── project.zip
 │   └── backup.zip
 │
-├── PSD/
-│   ├── website-design.psd
-│   └── logo.psd
-│
-├── DOCX/
-│   ├── report.docx
-│   └── resume.docx
-│
 ├── PDF/
 │   ├── invoice.pdf
 │   └── manual.pdf
 │
-├── JPG/
-│   ├── photo123.jpg
-│   └── IMG_2847.jpg
-│
-├── MP4/
-│   └── vacation.mp4
-│
-└── PY/
-    └── script.py
+└── JPG/
+    ├── photo123.jpg
+    └── IMG_2847.jpg
 ```
 
 ### One tool, multiple ways to organize
 
-TimeFold gives you several organization strategies, depending on how you want to work:
-
 | Organization method | What it does |
 | --- | --- |
 | **Category** | Groups supported files into categories such as Images, PDF Files, Document Files, Office Files, Video Files, Audio Files, 3D Files, CAD Files, Code Files, App Installers, and Zip & Archives |
-| **Date** | Groups files and folders by Month, Day, Quarter, or Year |
+| **Date** | Groups files and folders by Month, Day, Quarter, or Year (29 formats) |
 | **Category / Date** | Uses category as the first folder level and date as the second |
 | **Date / Category** | Uses date as the first folder level and category as the second |
 | **File Extension** | Groups files by their actual extension such as PDF, JPG, DOCX, ZIP, PSD, or PY |
@@ -234,28 +179,27 @@ TimeFold is designed to reduce that manual work while keeping the organization p
 
 TimeFold uses a **preview-first workflow** so you can see what it plans to do before organization begins.
 
-1. **Select Source:** Choose or drag and drop the folder you want to organize.
+1. **Select Source:** Choose, drag and drop, or launch with the folder you want to organize.
 2. **Review Preview:** TimeFold scans the directory and shows the planned destinations in the live preview grid.
-3. **Configure Options:** Choose your preferred date format, custom prefixes, or 24-hour timestamps in Preferences.
-4. **Start Organizing:** Start the organization and watch progress in real time as items are moved into their destinations.
-5. **Review the Result:** Open the output folder and use the generated CSV audit log to review the organization run.
+3. **Start Organizing:** Confirm the run — potential conflicts are detected and you decide whether to auto-rename or skip colliding items.
+4. **Review the Result:** Open the output folder and use the generated CSV audit log to review the organization run.
+5. **Undo:** Made a mistake? Every run's CSV log powers one-click Undo that restores files to their original locations.
 
 ---
 
 ## ✨ Key Features
 
-- **⚡ Smart Date Sorting:** Organize files and folders by **Month**, **Day**, **Quarter**, or **Year**.
+- **⚡ Smart Date Sorting:** Organize files and folders by **Month**, **Day**, **Quarter**, or **Year** — 29 folder formats.
 - **🗂️ Smart Categories:** Organize supported file types into **Images, PDF Files, Document Files, Office Files, Video Files, Audio Files, 3D Files, CAD Files, Code Files, App Installers, and Zip & Archives**.
 - **🧩 Hybrid Organization:** Combine date and category using **Category / Date** or **Date / Category** nesting.
 - **🔤 File Extension Mode:** Organize files by their raw file extension for a more precise structure.
 - **🛡️ Non-Destructive Organization:** TimeFold does not delete, alter, or compress your original files. It relocates items into the organized structure you choose.
+- **⚠️ Conflict Detection:** Before moving anything, TimeFold detects folder collisions and duplicate names, and lets you auto-rename or skip them.
+- **↩️ One-Click Undo:** Every run writes a CSV audit log; Undo restores everything to its original place.
 - **🔍 Full Interactive Preview:** Review files and their exact destinations in the live preview before moving anything.
-- **📝 Automatic CSV Audit Logs:** Every organization run generates a timestamped audit trail so you can review where items went.
-- **🚀 Large-Folder Support:** Designed to scan and paginate through large collections, including **10,000 to 100,000+ files**.
-- **⚠️ Smart Timestamp Detection:** Detects and alerts you when files share identical timestamps, which can happen with extracted archives or downloaded files.
-- **📁 Top-Level Folder Support:** Optionally organize loose subfolders alongside files with a single toggle.
-- **🎨 Modern UI with Dark Mode:** Clean desktop interface with Light and Dark themes plus Windows 11 accent integration.
-- **🖱️ Drag & Drop:** Drag and drop a folder into TimeFold to start the organization workflow.
+- **🎨 Dark & Light Themes:** Clean, minimalist interface with an instant theme switcher.
+- **🖱️ Drag & Drop:** Drop a folder anywhere on the window to start organizing it.
+- **💻 Self-Contained:** Single binary per platform — no .NET runtime installation required.
 
 ---
 
@@ -263,51 +207,70 @@ TimeFold uses a **preview-first workflow** so you can see what it plans to do be
 
 ### Option 1: Download (Recommended)
 
-1. Go to the [Releases](https://github.com/chandrath/TimeFold-File-Folder-Organizer/releases) page.
-2. Choose the download that fits your needs:
+1. Go to the [Releases](https://github.com/verosoft/TimeFold-File-Folder-Organizer/releases) page.
+2. Choose the download for your platform:
 
-   - **⭐ ReadyToRun (`TimeFold-win-x64-ReadyToRun.zip`):** Recommended for everyone. Extract it and double-click `TimeFold.exe`. It is completely standalone with zero prerequisites.
-   - **💻 Lightweight (`TimeFold-win-x64-RequiresDotNet10.zip`):** Ultra-compact 1.5 MB download for developers who already have the .NET 10 Desktop Runtime installed.
+   | Platform | File | Notes |
+   | --- | --- | --- |
+   | macOS (Apple Silicon) | `TimeFold-vX.Y.Z-macos-osx-arm64.zip` | Extract and open `TimeFold.app` |
+   | macOS (Intel) | `TimeFold-vX.Y.Z-macos-osx-x64.zip` | Extract and open `TimeFold.app` |
+   | Linux x64 | `TimeFold-vX.Y.Z-linux-linux-x64.tar.gz` | Extract and run `./TimeFold` |
+   | Linux ARM64 | `TimeFold-vX.Y.Z-linux-linux-arm64.tar.gz` | Extract and run `./TimeFold` |
+   | Windows x64 | `TimeFold-vX.Y.Z-win-x64.zip` | Extract and double-click `TimeFold.exe` |
+
+   Every build is **self-contained**: no .NET installation needed.
+
+   > **macOS note:** the app is not notarized. On first launch, right-click `TimeFold.app` → **Open** to bypass Gatekeeper.
 
 ### Option 2: Build from Source
 
 #### Prerequisites
 
-- [Windows 10 / 11](https://www.microsoft.com/windows) (64-bit)
+- macOS, Linux, or Windows
 - [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 #### Clone & Run
 
 ```bash
-# Clone the repository
-git clone https://github.com/chandrath/TimeFold-File-Folder-Organizer.git
-cd TimeFold-File-Folder-Organizer/src
+git clone https://github.com/verosoft/TimeFold-File-Folder-Organizer.git
+cd TimeFold-File-Folder-Organizer
 
 # Run in Development Mode
-dotnet run
+dotnet run --project app
 ```
 
-#### Build Standalone Single-File Executable
-
-To produce a standalone `.exe` that bundles all runtimes:
+#### Build a Self-Contained Single-File Executable
 
 ```bash
-dotnet publish TimeFold.csproj -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:DebugType=none -o ../publish
+# macOS (Apple Silicon), also: osx-x64, linux-x64, linux-arm64, win-x64
+dotnet publish app/TimeFold.Avalonia.csproj -c Release -r osx-arm64 --self-contained -o ./publish
 ```
 
-The compiled single-file `TimeFold.exe` will be generated inside the `publish/` directory.
+#### macOS App Bundle
+
+```bash
+./scripts/package-macos.sh ./publish ./dist
+# → dist/TimeFold.app
+```
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Runtime & Framework:** .NET 10 (Windows Desktop SDK)
+- **Runtime & Framework:** .NET 10
 - **Language:** C# 13
-- **UI Framework:** Windows Forms (High-DPI aware, custom theme engine)
-- **Dependencies:** Zero external NuGet packages (pure .NET standard libraries for maximum speed, security, and portability)
+- **UI Framework:** Avalonia 12 (MVVM with CommunityToolkit.Mvvm)
+- **Dependencies:** Avalonia + CommunityToolkit.Mvvm only
+- **CI/CD:** GitHub Actions builds 5 platform bundles on every version tag
 
 ---
 
 ## 📄 License
 
 This project is open source and licensed under the [GNU General Public License v3.0 (GPLv3)](LICENSE).
+
+---
+
+## 🙏 Credits
+
+Fork of [chandrath/TimeFold-File-Folder-Organizer](https://github.com/chandrath/TimeFold-File-Folder-Organizer) (Windows Forms, Windows-only), rewritten as a cross-platform Avalonia application. Thanks to the original author for the concept and the organizer core.

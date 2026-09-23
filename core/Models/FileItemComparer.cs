@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-// portable: was System.Windows.Forms (used for column sort glyphs only)
+// Column sort glyph helpers are UI-agnostic (used by Avalonia DataGrid).
 
 namespace FileOrganizer.Models
 {
@@ -35,7 +35,7 @@ namespace FileOrganizer.Models
             _ascending = ascending;
         }
 
-        // portable: Compare(object,object) removed — it existed only for WinForms ListViewItem sorting
+        // Non-generic IComparer removed: it existed only for legacy ListView sorting.
 
         private static int CompareType(FileItem f1, FileItem f2)
         {

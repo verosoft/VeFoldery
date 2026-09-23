@@ -193,8 +193,7 @@ public partial class MainViewModel : ViewModelBase
             return;
         }
 
-        // Detect collisions before touching anything, mirroring the WinForms
-        // flow: CheckConflicts() on preview, dialog when starting a run.
+        // Detect collisions before touching anything: dialog when starting a run.
         var grouped = _service.GroupByMonthYear(toOrganize);
         var conflicts = ConflictDetector.Detect(
             toOrganize, grouped, FolderPath,
@@ -272,8 +271,7 @@ public partial class MainViewModel : ViewModelBase
                 workingDirectory: FolderPath,
                 outputDirectory: FolderPath);
 
-            // Reuse the same naming/mode settings the WinForms app persists,
-            // so both frontends behave identically for the same user config.
+            // Persisted naming/mode settings shared across versions of the app.
             _service.ApplyNamingSettings(
                 format: Settings.FolderFormat,
                 prefix: Settings.FolderPrefix,
