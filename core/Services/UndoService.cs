@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FileOrganizer.Config;
-using FileOrganizer.Models;
+using VeFoldery.Core.Config;
+using VeFoldery.Core.Models;
 
-namespace FileOrganizer.Services
+namespace VeFoldery.Core.Services
 {
     /// <summary>
     /// Result of undoing one organization run from its CSV audit log.

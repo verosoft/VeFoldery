@@ -1,8 +1,8 @@
-using FileOrganizer.Models;
-using FileOrganizer.Services;
+using VeFoldery.Core.Models;
+using VeFoldery.Core.Services;
 using Xunit;
 
-namespace TimeFold.Core.Tests
+namespace VeFoldery.Core.Tests
 {
     public class LogicTests
     {
@@ -78,7 +78,7 @@ namespace TimeFold.Core.Tests
                 File.WriteAllText(Path.Combine(dir, ".DS_Store"), "junk");
                 File.WriteAllText(Path.Combine(dir, ".hidden"), "junk");
 
-                var svc = new FileOrganizerService("TimeFold", dir, dir);
+                var svc = new FileOrganizerService("VeFoldery", dir, dir);
                 var files = svc.ScanFiles(includeTopLevelFolders: false, ignoreSystemFiles: true);
 
                 var names = files.Select(f => f.Name).ToList();
@@ -103,7 +103,7 @@ namespace TimeFold.Core.Tests
                 File.WriteAllText(Path.Combine(dir, "a.txt"), "a");
                 File.WriteAllText(Path.Combine(dir, "b.jpg"), "b");
 
-                var svc = new FileOrganizerService("TimeFold", dir, dir);
+                var svc = new FileOrganizerService("VeFoldery", dir, dir);
                 var scanned = svc.ScanFiles(false, true);
                 var organizeTask = svc.OrganizeFilesAsync(scanned, null, CancellationToken.None);
                 organizeTask.Wait();
@@ -138,9 +138,9 @@ namespace TimeFold.Core.Tests
         [Fact]
         public void ConfigDirectory_ResolvesToUserProfile()
         {
-            string path = FileOrganizer.Config.AppConstants.GetConfigDirectoryPath();
+            string path = VeFoldery.Core.Config.AppConstants.GetConfigDirectoryPath();
             Assert.DoesNotContain("Windows", path);
-            Assert.Contains("Appsphinx", path);
+            Assert.Contains("Verosoft", path);
         }
     }
 }

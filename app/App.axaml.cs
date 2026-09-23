@@ -4,10 +4,10 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using TimeFold.Avalonia.ViewModels;
-using TimeFold.Avalonia.Views;
+using VeFoldery.Avalonia.ViewModels;
+using VeFoldery.Avalonia.Views;
 
-namespace TimeFold.Avalonia;
+namespace VeFoldery.Avalonia;
 
 public partial class App : Application
 {

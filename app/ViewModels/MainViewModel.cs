@@ -7,10 +7,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileOrganizer.Models;
-using FileOrganizer.Services;
+using VeFoldery.Core.Models;
+using VeFoldery.Core.Services;
 
-namespace TimeFold.Avalonia.ViewModels;
+namespace VeFoldery.Avalonia.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
@@ -213,7 +213,7 @@ public partial class MainViewModel : ViewModelBase
 
         // Safety gate: moving files is destructive-ish; confirm first.
         var summary = $"{toOrganize.Count} item(s) in \"{FolderPath}\" will be moved into " +
-                      $"\"{FileOrganizer.Config.AppConstants.SortedFolderPrefix}…\" subfolders " +
+                      $"\"{VeFoldery.Core.Config.AppConstants.SortedFolderPrefix}…\" subfolders " +
                       $"(mode: {SelectedMode}). A CSV audit log will be written.";
         if (ConfirmOrganize is not null && !await ConfirmOrganize(summary))
         {
@@ -267,7 +267,7 @@ public partial class MainViewModel : ViewModelBase
                 : new HashSet<string>();
 
             _service = new FileOrganizerService(
-                executablePath: Environment.ProcessPath ?? "TimeFold",
+                executablePath: Environment.ProcessPath ?? "VeFoldery",
                 workingDirectory: FolderPath,
                 outputDirectory: FolderPath);
 

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FileOrganizer.Models
+namespace VeFoldery.Core.Models
 {
     /// <summary>
     /// User custom overrides for file type classification, saved in custom_types.json.

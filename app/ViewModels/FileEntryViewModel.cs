@@ -1,8 +1,8 @@
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FileOrganizer.Models;
+using VeFoldery.Core.Models;
 
-namespace TimeFold.Avalonia.ViewModels;
+namespace VeFoldery.Avalonia.ViewModels;
 
 public partial class FileEntryViewModel : ObservableObject
 {

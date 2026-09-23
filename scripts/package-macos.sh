@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Bundle the self-contained TimeFold binary as a macOS .app
+# Bundle the self-contained VeFoldery binary as a macOS .app
 # Usage: ./package-macos.sh <path-to-published-dir> [output-dir]
 set -euo pipefail
 
 PUBLISH_DIR="${1:?usage: package-macos.sh <publish-dir> [output-dir]}"
 OUT_DIR="${2:-./dist}"
-APP_NAME="TimeFold"
+APP_NAME="VeFoldery"
 BUNDLE_ID="com.verosoft.timefold"
-VERSION="$(dotnet read app/TimeFold.Avalonia.csproj -get PropertyGroup:Version 2>/dev/null | tr -d ' ' || echo 1.0.4)"
+VERSION="$(dotnet read app/VeFoldery.Avalonia.csproj -get PropertyGroup:Version 2>/dev/null | tr -d ' ' || echo 1.0.4)"
 
 APP="$OUT_DIR/$APP_NAME.app"
 CONTENTS="$APP/Contents"
@@ -17,7 +17,7 @@ RESOURCES="$CONTENTS/Resources"
 mkdir -p "$MACOS" "$RESOURCES"
 
 # Binary
-cp "$PUBLISH_DIR/TimeFold" "$MACOS/$APP_NAME"
+cp "$PUBLISH_DIR/VeFoldery" "$MACOS/$APP_NAME"
 chmod +x "$MACOS/$APP_NAME"
 
 # Icon (icns): build from app.png if sips is available (macOS only)
@@ -43,7 +43,7 @@ cat > "$CONTENTS/Info.plist" <<PLIST
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>                <string>$APP_NAME</string>
-    <key>CFBundleDisplayName</key>          <string>TimeFold</string>
+    <key>CFBundleDisplayName</key>          <string>VeFoldery</string>
     <key>CFBundleIdentifier</key>           <string>$BUNDLE_ID</string>
     <key>CFBundleVersion</key>              <string>$VERSION</string>
     <key>CFBundleShortVersionString</key>   <string>$VERSION</string>

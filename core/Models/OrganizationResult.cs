@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FileOrganizer.Models
+namespace VeFoldery.Core.Models
 {
     public class OrganizationResult
     {

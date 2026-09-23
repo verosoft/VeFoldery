@@ -3,9 +3,9 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
-using FileOrganizer.Models;
+using VeFoldery.Core.Models;
 
-namespace TimeFold.Avalonia;
+namespace VeFoldery.Avalonia;
 
 public enum AppTheme
 {
@@ -20,8 +20,8 @@ public enum AppTheme
 /// </summary>
 public static class ThemeManager
 {
-    private const string DarkUri = "avares://TimeFold/Themes/LinearDark.axaml";
-    private const string LightUri = "avares://TimeFold/Themes/LinearLight.axaml";
+    private const string DarkUri = "avares://VeFoldery/Themes/LinearDark.axaml";
+    private const string LightUri = "avares://VeFoldery/Themes/LinearLight.axaml";
 
     public static AppTheme Current { get; private set; } = AppTheme.Dark;
 
@@ -54,7 +54,7 @@ public static class ThemeManager
             app.Styles.Remove(si);
 
         var uri = theme == AppTheme.Light ? LightUri : DarkUri;
-        app.Styles.Add(new StyleInclude(new Uri("avares://TimeFold/"))
+        app.Styles.Add(new StyleInclude(new Uri("avares://VeFoldery/"))
         {
             Source = new Uri(uri)
         });

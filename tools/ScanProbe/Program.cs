@@ -1,7 +1,7 @@
-using FileOrganizer.Services;
+using VeFoldery.Core.Services;
 
 var folder = args[0];
-var svc = new FileOrganizerService("TimeFold", folder, folder);
+var svc = new FileOrganizerService("VeFoldery", folder, folder);
 
 var a = svc.ScanFiles(true, ignoreSystemFiles: true);
 Console.WriteLine($"ignoreSystemFiles=true : {a.Count} items");

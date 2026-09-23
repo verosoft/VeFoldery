@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace FileOrganizer.Models
+namespace VeFoldery.Core.Models
 {
     public class FileItem
     {

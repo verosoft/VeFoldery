@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 
-namespace TimeFold.Avalonia.ViewModels;
+namespace VeFoldery.Avalonia.ViewModels;
 
 /// <summary>
 /// Bridges view-model commands to Avalonia storage/window APIs that need a

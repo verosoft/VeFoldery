@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 // Column sort glyph helpers are UI-agnostic (used by Avalonia DataGrid).
 
-namespace FileOrganizer.Models
+namespace VeFoldery.Core.Models
 {
     public class FileItemComparer
     {

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using FileOrganizer.Config;
-using FileOrganizer.Models;
+using VeFoldery.Core.Config;
+using VeFoldery.Core.Models;
 
-namespace FileOrganizer.Services
+namespace VeFoldery.Core.Services
 {
     /// <summary>
     /// Service managing factory file type definitions, user overrides (deltas), and fast O(1) category resolution.

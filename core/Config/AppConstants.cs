@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using FileOrganizer.Models;
+using VeFoldery.Core.Models;
 
-namespace FileOrganizer.Config
+namespace VeFoldery.Core.Config
 {
     /// <summary>
     /// Single Source of Truth (SSoT) for application metadata, default preferences, and UI constants.
@@ -12,11 +12,11 @@ namespace FileOrganizer.Config
     public static class AppConstants
     {
         // Application Metadata (SSoT)
-        // NOTE: AppVersion is dynamically resolved from the build assembly stamped by TimeFold.csproj (<Version>x.y.z</Version>).
-        // To bump the version across the entire app, simply change <Version> in TimeFold.csproj.
-        public const string VendorName = "Appsphinx";
-        public const string AppName = "TimeFold: File & Folder Organizer";
-        public const string ShortAppName = "TimeFold";
+        // NOTE: AppVersion is dynamically resolved from the build assembly stamped by VeFoldery.csproj (<Version>x.y.z</Version>).
+        // To bump the version across the entire app, simply change <Version> in VeFoldery.csproj.
+        public const string VendorName = "Verosoft";
+        public const string AppName = "VeFoldery: File & Folder Organizer";
+        public const string ShortAppName = "VeFoldery";
         public static string AppVersion => typeof(AppConstants).Assembly.GetName().Version!.ToString(3);
         private static readonly Lazy<string> _lazyBuildNumber = new(() =>
         {
@@ -39,7 +39,7 @@ namespace FileOrganizer.Config
         public const string AppTagline = "Effortlessly organize files & folders into clean date-based timelines or smart categories";
         public const string AppDescription = "Fast, non-destructive file and folder organizer for Windows that sorts messy directories into clean date-based timelines or smart file-type categories.";
         public const string Author = "Shree";
-        public const string RepositoryUrl = "https://github.com/chandrath/TimeFold-File-Folder-Organizer";
+        public const string RepositoryUrl = "https://github.com/verosoft/VeFoldery";
         public const string LicenseText = "GNU General Public License v3.0 (GPLv3) - Free and Open Source";
         public const string CopyrightText = LicenseText;
 

@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace TimeFold.Avalonia;
+namespace VeFoldery.Avalonia;
 
 sealed class Program
 {

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FileOrganizer.Config;
-using FileOrganizer.Models;
+using VeFoldery.Core.Config;
+using VeFoldery.Core.Models;
 
-namespace FileOrganizer.Services
+namespace VeFoldery.Core.Services
 {
     public static class ConflictDetector
     {

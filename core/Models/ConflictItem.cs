@@ -1,6 +1,6 @@
 using System;
 
-namespace FileOrganizer.Models
+namespace VeFoldery.Core.Models
 {
     public enum ConflictType
     {

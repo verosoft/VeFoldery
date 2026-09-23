@@ -1,4 +1,4 @@
-name: Release TimeFold (multiplatform)
+name: Release VeFoldery (multiplatform)
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 env:
-  APP_NAME: TimeFold
+  APP_NAME: VeFoldery
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
       - name: Publish (self-contained single file)
         shell: bash
         run: |
-          dotnet publish app/TimeFold.Avalonia.csproj -c Release -r ${{ matrix.rid }} \
+          dotnet publish app/VeFoldery.Avalonia.csproj -c Release -r ${{ matrix.rid }} \
             -o publish/
 
       - name: Strip debug symbols (linux/mac)
@@ -59,7 +59,7 @@ jobs:
 
           VER="${GITHUB_REF_NAME:-snapshot}"
           cd dist
-          zip -r --symlinks "TimeFold-${VER}-macos-${{ matrix.rid }}.zip" TimeFold.app
+          zip -r --symlinks "VeFoldery-${VER}-macos-${{ matrix.rid }}.zip" VeFoldery.app
           cd ..
 
       # ---------- Linux: AppImage + tar.gz ----------
@@ -68,10 +68,10 @@ jobs:
         shell: bash
         run: |
           VER="${GITHUB_REF_NAME:-snapshot}"
-          mkdir -p dist/TimeFold
-          cp publish/TimeFold dist/TimeFold/
-          chmod +x dist/TimeFold/TimeFold
-          tar -czf "dist/TimeFold-${VER}-linux-${{ matrix.rid }}.tar.gz" -C dist TimeFold
+          mkdir -p dist/VeFoldery
+          cp publish/VeFoldery dist/VeFoldery/
+          chmod +x dist/VeFoldery/VeFoldery
+          tar -czf "dist/VeFoldery-${VER}-linux-${{ matrix.rid }}.tar.gz" -C dist VeFoldery
 
       - name: Package Linux (AppImage, x64 only)
         if: runner.os == 'Linux' && matrix.rid == 'linux-x64'
@@ -79,29 +79,29 @@ jobs:
         run: |
           VER="${GITHUB_REF_NAME:-snapshot}"
           mkdir -p AppDir/usr/bin AppDir/usr/share/icons/hicolor/256x256/apps
-          cp publish/TimeFold AppDir/usr/bin/TimeFold
-          chmod +x AppDir/usr/bin/TimeFold
+          cp publish/VeFoldery AppDir/usr/bin/VeFoldery
+          chmod +x AppDir/usr/bin/VeFoldery
           if [ -f app/Assets/app.png ]; then
             cp app/Assets/app.png AppDir/usr/share/icons/hicolor/256x256/apps/timefold.png
           fi
           cat > AppDir/timefold.desktop <<DESKTOP
           [Desktop Entry]
           Type=Application
-          Name=TimeFold
+          Name=VeFoldery
           Comment=Organize files into date-based or category folders
-          Exec=TimeFold
+          Exec=VeFoldery
           Icon=timefold
           Categories=Utility;FileTools;
           DESKTOP
           cat > AppDir/AppRun <<APPRUN
           #!/bin/sh
-          exec "\$(dirname "\$(readlink -f "\$0")")/usr/bin/TimeFold" "\$@"
+          exec "\$(dirname "\$(readlink -f "\$0")")/usr/bin/VeFoldery" "\$@"
           APPRUN
           chmod +x AppDir/AppRun
           # appimagetool (static, no FUSE needed to build)
           curl -sL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool
-          ./appimagetool AppDir "dist/TimeFold-${VER}-linux-x64.AppImage" || \
+          ./appimagetool AppDir "dist/VeFoldery-${VER}-linux-x64.AppImage" || \
             echo "::warning::AppImage build failed; tar.gz still available"
 
       # ---------- Windows: zip ----------
@@ -114,12 +114,12 @@ jobs:
           if (-not $env:VER -or $env:VER -eq '${{ github.ref_name }}' -and '${{ github.ref_name }}' -notlike 'v*') { $env:VER = "snapshot" }
           Remove-Item publish/*.pdb -Force -ErrorAction SilentlyContinue
           New-Item -ItemType Directory -Force -Path dist | Out-Null
-          Compress-Archive -Path publish/* -DestinationPath "dist/TimeFold-$env:VER-win-x64.zip"
+          Compress-Archive -Path publish/* -DestinationPath "dist/VeFoldery-$env:VER-win-x64.zip"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: TimeFold-${{ matrix.rid }}
+          name: VeFoldery-${{ matrix.rid }}
           path: |
             dist/*.zip
             dist/*.tar.gz

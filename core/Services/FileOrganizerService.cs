@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FileOrganizer.Config;
-using FileOrganizer.Models;
+using VeFoldery.Core.Config;
+using VeFoldery.Core.Models;
 
-namespace FileOrganizer.Services
+namespace VeFoldery.Core.Services
 {
     public class FileOrganizerService
     {

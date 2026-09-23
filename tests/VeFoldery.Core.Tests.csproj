@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../core/TimeFold.Core.csproj" />
+    <ProjectReference Include="../core/VeFoldery.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace FileOrganizer.Models
+namespace VeFoldery.Core.Models
 {
     public class AppSettings
     {
@@ -44,7 +44,7 @@ namespace FileOrganizer.Models
                     if (settings != null) return settings;
                 }
 
-                // Check for legacy configuration in %APPDATA%\TimeFold\
+                // Check for legacy configuration in %APPDATA%\VeFoldery\
                 string legacyDir = Config.AppConstants.GetLegacyConfigDirectoryPath();
                 if (Directory.Exists(legacyDir))
                 {

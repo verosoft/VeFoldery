@@ -1,4 +1,4 @@
-namespace FileOrganizer.Models
+namespace VeFoldery.Core.Models
 {
     /// <summary>
     /// Supported organization strategies for arranging files and folders.

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using FileOrganizer.Config;
-using FileOrganizer.Models;
+using VeFoldery.Core.Config;
+using VeFoldery.Core.Models;
 
-namespace FileOrganizer.Services
+namespace VeFoldery.Core.Services
 {
     /// <summary>
     /// Pure resolver for determining target folders based on OrganizationMode (Date, Category, Extension, Hybrid).

@@ -5,8 +5,8 @@
     <Nullable>enable</Nullable>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Version>1.0.4</Version>
-    <AssemblyName>TimeFold</AssemblyName>
-    <RootNamespace>TimeFold.Avalonia</RootNamespace>
+    <AssemblyName>VeFoldery</AssemblyName>
+    <RootNamespace>VeFoldery.Avalonia</RootNamespace>
     <ApplicationIcon Condition="$(RuntimeIdentifier.StartsWith('win'))">Assets\app.ico</ApplicationIcon>
 
     <!-- Self-contained single-file: no .NET runtime needed on target machines -->
@@ -35,6 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../core/TimeFold.Core.csproj" />
+    <ProjectReference Include="../core/VeFoldery.Core.csproj" />
   </ItemGroup>
 </Project>

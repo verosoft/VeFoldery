@@ -2,10 +2,10 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using FileOrganizer.Models;
-using TimeFold.Avalonia.ViewModels;
+using VeFoldery.Core.Models;
+using VeFoldery.Avalonia.ViewModels;
 
-namespace TimeFold.Avalonia.Views;
+namespace VeFoldery.Avalonia.Views;
 
 public partial class MainWindow : Window
 {

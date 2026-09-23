@@ -7,9 +7,9 @@ using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
-using FileOrganizer.Models;
+using VeFoldery.Core.Models;
 
-namespace TimeFold.Avalonia.Views;
+namespace VeFoldery.Avalonia.Views;
 
 public static class Dialogs
 {
@@ -101,7 +101,7 @@ public static class Dialogs
         };
         var subtitle = new TextBlock
         {
-            Text = "TimeFold will never touch or overwrite existing folders/files. " +
+            Text = "VeFoldery will never touch or overwrite existing folders/files. " +
                    "Colliding items can be auto-renamed or skipped.",
             TextWrapping = TextWrapping.Wrap,
             MaxWidth = 680,

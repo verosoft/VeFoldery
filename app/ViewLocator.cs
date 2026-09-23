@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using TimeFold.Avalonia.ViewModels;
+using VeFoldery.Avalonia.ViewModels;
 
-namespace TimeFold.Avalonia;
+namespace VeFoldery.Avalonia;
 
 /// <summary>
 /// Given a view model, returns the corresponding view if possible.
