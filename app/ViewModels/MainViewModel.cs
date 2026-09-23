@@ -86,6 +86,18 @@ public partial class MainViewModel : ViewModelBase
         OnPropertyChanged(nameof(CanOrganize));
     }
 
+    /// <summary>Header toggle: select all when anything is unselected, else deselect all.</summary>
+    public void ToggleAll()
+    {
+        var target = Files.Any(f => !f.Include);
+        foreach (var f in Files) f.Include = target;
+        OnPropertyChanged(nameof(AllSelected));
+        OnPropertyChanged(nameof(CanOrganize));
+        StatusText = target
+            ? $"{Files.Count} item(s) — all selected for organizing"
+            : $"{Files.Count} item(s) — none selected";
+    }
+
     /// <summary>
     /// View-provided confirmation gate for the Organize action.
     /// Receives a human summary; returns true to proceed.

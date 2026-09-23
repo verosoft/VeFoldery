@@ -56,10 +56,37 @@
                     <DataGridTemplateColumn Width="52">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding $parent[Window].DataContext.AllSelected, Mode=TwoWay}"
-                                          Width="18" Height="18" Padding="0" MinWidth="0" MinHeight="0"
-                                          HorizontalAlignment="Center" VerticalAlignment="Center"
-                                          ToolTip.Tip="Select / deselect all" />
+                                <ToggleButton IsChecked="{Binding $parent[Window].DataContext.AllSelected, Mode=TwoWay}"
+                                              Width="18" Height="18" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              ToolTip.Tip="Select / deselect all">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="ToggleButton">
+                                            <Border x:Name="root" Width="16" Height="16" CornerRadius="4"
+                                                    Background="#d1d5db" BorderThickness="1" BorderBrush="#b9bec8">
+                                                <Path x:Name="check" Data="M 2.5,8 L 6,11.5 L 13,4"
+                                                      Stroke="#ffffff" StrokeThickness="2"
+                                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                      IsVisible="False"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                    <ToggleButton.Styles>
+                                        <Style Selector="ToggleButton:checked /template/ Border#root">
+                                            <Setter Property="Background" Value="#007AFF" />
+                                            <Setter Property="BorderBrush" Value="#007AFF" />
+                                        </Style>
+                                        <Style Selector="ToggleButton:checked /template/ Path#check">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </Style>
+                                        <Style Selector="ToggleButton:indeterminate /template/ Border#root">
+                                            <Setter Property="Background" Value="#9ec3ff" />
+                                        </Style>
+                                        <Style Selector="ToggleButton:indeterminate /template/ Path#check">
+                                            <Setter Property="IsVisible" Value="True" />
+                                            <Setter Property="Opacity" Value="0.55" />
+                                        </Style>
+                                    </ToggleButton.Styles>
+                                </ToggleButton>
                             </DataTemplate>
                         </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>

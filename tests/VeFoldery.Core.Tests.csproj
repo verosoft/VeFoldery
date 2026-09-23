@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../core/VeFoldery.Core.csproj" />
+    <ProjectReference Include="../app/VeFoldery.Avalonia.csproj" />
   </ItemGroup>
 
 </Project>
