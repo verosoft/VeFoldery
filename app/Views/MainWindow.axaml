@@ -25,6 +25,7 @@
                         IsEnabled="{Binding HasFolder}" />
                 <Button Content="↺ Undo last run" Command="{Binding UndoCommand}"
                         IsEnabled="{Binding HasFolder}" />
+                <Button Content="⚙ Preferences" Command="{Binding PreferencesCommand}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <TextBlock Text="Mode:" VerticalAlignment="Center" />

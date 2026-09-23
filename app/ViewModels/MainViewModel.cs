@@ -15,7 +15,7 @@ namespace VeFoldery.Avalonia.ViewModels;
 public partial class MainViewModel : ViewModelBase
 {
     private FileOrganizerService? _service;
-    private AppSettings Settings { get; } = AppSettings.LoadFromFile();
+    public AppSettings Settings { get; } = AppSettings.LoadFromFile();
 
     [ObservableProperty]
     private string _folderPath = string.Empty;
@@ -66,6 +66,19 @@ public partial class MainViewModel : ViewModelBase
     /// </summary>
     public Func<System.Collections.Generic.IReadOnlyList<ConflictInfo>,
         Task<ConflictResolutionStrategy?>>? ConfirmConflicts { get; set; }
+
+    /// <summary>
+    /// View-provided preferences editor. Returns true when settings were saved.
+    /// </summary>
+    public Func<Task<bool>>? ShowPreferences { get; set; }
+
+    [RelayCommand]
+    private async Task PreferencesAsync()
+    {
+        if (ShowPreferences is null) return;
+        var saved = await ShowPreferences();
+        if (saved && HasFolder) await ScanCoreAsync();
+    }
 
     public MainViewModel()
     {

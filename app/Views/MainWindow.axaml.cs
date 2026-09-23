@@ -69,6 +69,9 @@ public partial class MainWindow : Window
 
             vm.ConfirmConflicts = conflicts =>
                 Dialogs.ShowConflictsAsync(this, conflicts);
+
+            vm.ShowPreferences = () =>
+                PreferencesDialog.ShowAsync(this, vm.Settings);
         }
     }
 }
