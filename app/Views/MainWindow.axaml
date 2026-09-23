@@ -53,7 +53,14 @@
                       HeadersVisibility="All"
                       GridLinesVisibility="Horizontal">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Move" Width="52">
+                    <DataGridTemplateColumn Width="52">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding $parent[Window].DataContext.AllSelected, Mode=TwoWay}" MinWidth="18" MinHeight="18"
+                                          HorizontalAlignment="Center"
+                                          ToolTip.Tip="Select / deselect all" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="vm:FileEntryViewModel">
                                 <CheckBox IsChecked="{Binding Include}" HorizontalAlignment="Center" />

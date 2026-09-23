@@ -55,6 +55,38 @@ public partial class MainViewModel : ViewModelBase
     public bool CanOrganize => Files.Count > 0 && !IsLoading;
 
     /// <summary>
+    /// Header checkbox state: true when every file is selected, false when none,
+    /// null (indeterminate) when mixed. Setting it selects/deselects all.
+    /// </summary>
+    public bool? AllSelected
+    {
+        get
+        {
+            if (Files.Count == 0) return false;
+            var selected = Files.Count(f => f.Include);
+            return selected == Files.Count ? true : selected == 0 ? false : null;
+        }
+        set
+        {
+            if (value is null) return; // ignore indeterminate clicks
+            var target = value.Value;
+            foreach (var f in Files) f.Include = target;
+            OnPropertyChanged(nameof(AllSelected));
+            OnPropertyChanged(nameof(CanOrganize));
+            StatusText = target
+                ? $"{Files.Count} item(s) — all selected for organizing"
+                : $"{Files.Count} item(s) — none selected";
+        }
+    }
+
+    /// <summary>Refreshes the header checkbox after an individual row toggles.</summary>
+    public void RefreshAllSelected()
+    {
+        OnPropertyChanged(nameof(AllSelected));
+        OnPropertyChanged(nameof(CanOrganize));
+    }
+
+    /// <summary>
     /// View-provided confirmation gate for the Organize action.
     /// Receives a human summary; returns true to proceed.
     /// </summary>
@@ -305,11 +337,13 @@ public partial class MainViewModel : ViewModelBase
                     fileDateSource: Settings.FileDateSource,
                     folderDateSource: Settings.FolderDateSource));
 
-            Files = new ObservableCollection<FileEntryViewModel>(
-                scanned.Select(f => new FileEntryViewModel(f)
-                {
-                    Include = keep.Count == 0 || keep.Contains(f.Name)
-                }));
+            var entries = scanned.Select(f => new FileEntryViewModel(f)
+            {
+                Include = keep.Count == 0 || keep.Contains(f.Name)
+            }).ToList();
+            foreach (var e in entries)
+                e.IncludeChanged += RefreshAllSelected;
+            Files = new ObservableCollection<FileEntryViewModel>(entries);
 
             OnPropertyChanged(nameof(CanOrganize));
             StatusText = $"{scanned.Count} item(s) — {Files.Count(f => f.Include)} selected for organizing";

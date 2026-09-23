@@ -6,8 +6,13 @@ namespace VeFoldery.Avalonia.ViewModels;
 
 public partial class FileEntryViewModel : ObservableObject
 {
+    /// <summary>Raised when Include changes so the header checkbox can refresh.</summary>
+    public event Action? IncludeChanged;
+
     [ObservableProperty]
     private bool _include = true;
+
+    partial void OnIncludeChanged(bool value) => IncludeChanged?.Invoke();
 
     public FileItem Item { get; }
 
