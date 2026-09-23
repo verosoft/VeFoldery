@@ -57,7 +57,7 @@
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <ToggleButton IsChecked="{Binding $parent[Window].DataContext.AllSelected, Mode=TwoWay}"
-                                              Width="18" Height="18" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Width="18" Height="18" Margin="-10,0,-14,0" HorizontalAlignment="Center" VerticalAlignment="Center"
                                               ToolTip.Tip="Select / deselect all">
                                     <ToggleButton.Template>
                                         <ControlTemplate TargetType="ToggleButton">
@@ -91,7 +91,7 @@
                         </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="vm:FileEntryViewModel">
-                                <CheckBox IsChecked="{Binding Include}" HorizontalAlignment="Center" />
+                                <CheckBox IsChecked="{Binding Include}" Margin="-10,0,-14,0" HorizontalAlignment="Center" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
