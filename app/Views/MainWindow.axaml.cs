@@ -1,4 +1,6 @@
+using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using FileOrganizer.Models;
 using TimeFold.Avalonia.ViewModels;
@@ -15,6 +17,27 @@ public partial class MainWindow : Window
         StorageProviderHelper.Register(() => this);
 
         ModeSelector.SelectionChanged += (_, _) => OnModeChanged();
+
+        // Drop a folder anywhere on the window to open it (parity with the
+        // WinForms PnlSourceDrop drag & drop).
+        DragDrop.SetAllowDrop(this, true);
+        AddHandler(DragDrop.DragOverEvent, OnDragOver);
+        AddHandler(DragDrop.DropEvent, OnDrop);
+    }
+
+    private void OnDragOver(object? sender, DragEventArgs e)
+    {
+        e.DragEffects = e.DataTransfer.Formats.Contains(DataFormat.File)
+            ? DragDropEffects.Copy
+            : DragDropEffects.None;
+    }
+
+    private void OnDrop(object? sender, DragEventArgs e)
+    {
+        if (e.DataTransfer.TryGetFiles() is not { } items) return;
+        var path = items.FirstOrDefault()?.Path.LocalPath;
+        if (path is null || Vm is null || !System.IO.Directory.Exists(path)) return;
+        Vm.FolderPath = path;
     }
 
     private MainViewModel? Vm => DataContext as MainViewModel;
