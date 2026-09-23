@@ -2,11 +2,14 @@
   <img src="app/Assets/app.png" alt="TimeFold Logo" width="128" />
 </p>
 
-<h1 align="center">TimeFold: File & Folder Organizer</h1>
+<h1 align="center">VeFoldery</h1>
 
 <p align="center">
   <strong>Fast, non-destructive file and folder organizer for macOS, Linux and Windows that turns messy directories into clean date-based timelines, file-type categories, or structured extension-based folders.</strong>
 </p>
+
+> [!IMPORTANT]
+> **VeFoldery is a derivative of [TimeFold](https://github.com/chandrath/TimeFold-File-Folder-Organizer)** by [@chandrath](https://github.com/chandrath) — a Windows Forms organizer for Windows. VeFoldery started as a fork and was rewritten as a cross-platform Avalonia application. All credit for the original concept, the organizer core, and the category/date system goes to the original author. This repository continues that work under the same **GPLv3** license, extending it to macOS, Linux and Windows.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="Platform" />
@@ -269,8 +272,3 @@ dotnet publish app/TimeFold.Avalonia.csproj -c Release -r osx-arm64 --self-conta
 
 This project is open source and licensed under the [GNU General Public License v3.0 (GPLv3)](LICENSE).
 
----
-
-## 🙏 Credits
-
-Fork of [chandrath/TimeFold-File-Folder-Organizer](https://github.com/chandrath/TimeFold-File-Folder-Organizer) (Windows Forms, Windows-only), rewritten as a cross-platform Avalonia application. Thanks to the original author for the concept and the organizer core.
