@@ -19,6 +19,10 @@
   <img src="https://img.shields.io/badge/Release-Self--contained-success" alt="Self-contained" />
 </p>
 
+<p align="center">
+  <img src=".github/assets/screenshot-light.png" alt="VeFoldery — File &amp; Folder Organizer" width="800" />
+</p>
+
 ---
 
 ## What VeFoldery Does
