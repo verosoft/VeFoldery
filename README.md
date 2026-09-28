@@ -5,7 +5,7 @@
 </p>
 
 > [!IMPORTANT]
-> **VeFoldery is a derivative of [VeFoldery](https://github.com/chandrath/VeFoldery-File-Folder-Organizer)** by [@chandrath](https://github.com/chandrath) — a Windows Forms organizer for Windows. VeFoldery started as a fork and was rewritten as a cross-platform Avalonia application. All credit for the original concept, the organizer core, and the category/date system goes to the original author. This repository continues that work under the same **GPLv3** license, extending it to macOS, Linux and Windows.
+> **VeFoldery is a derivative of [TimeFold — File & Folder Organizer](https://github.com/chandrath/TimeFold-File-Folder-Organizer)** by [@chandrath](https://github.com/chandrath) — a Windows Forms organizer for Windows. VeFoldery started as a fork and was rewritten as a cross-platform Avalonia application. All credit for the original concept, the organizer core, and the category/date system goes to the original author. This repository continues that work under the same **GPLv3** license, extending it to macOS, Linux and Windows.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-blue" alt="Platform" />
