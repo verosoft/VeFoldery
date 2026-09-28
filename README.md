@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="app/Assets/app.png" alt="VeFoldery Logo" width="128" />
-</p>
-
 <h1 align="center">VeFoldery</h1>
 
 <p align="center">
